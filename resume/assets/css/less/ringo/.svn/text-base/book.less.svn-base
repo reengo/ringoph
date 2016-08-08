@@ -1,0 +1,28 @@
+.bookstart{
+	input[type="text"],
+	input[type="text"].date-form{
+		font-size:16px;
+    	padding: 15px 25px 15px 5px;
+		margin:5px 0;
+		background:url(@iconModPath) no-repeat @white;
+	}
+	input[type="text"]{background-position:right -46px}
+	input[type="text"].date-form{background-position:right -106px}
+	input[type="submit"]{
+		padding: 15px 60px;
+		margin:5px 0;
+	}
+	[class^="icon-"]:before,
+	[class*=" icon-"]:before {
+	 	color:@grayLight;
+	}
+}
+
+input[type="text"].date-form{
+	padding: 15px 10px;
+	font-size: 18px;
+	font-weight: bold;
+	margin:5px 0;
+	background:url(@iconModPath) no-repeat @white right -116px;
+}
+

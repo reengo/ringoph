@@ -1,0 +1,177 @@
+/**** TODO @ringo: improve error message on signup **************
+ * I'm passing a message on successful or unsuccessful          *
+ * user registration.                                           *
+ * e.g. { 'type' : 'bad', 'message' : 'Email already exists.' } *
+ ****************************************************************/
+
+var msgs = {
+    blank: '',
+    emailInvalid: 'Please enter a valid email.',
+    emailNotExist: 'Email does not exist.',
+    passwordError: 'Please enter a password.',
+    confirmPasswordError: 'Passwords don\'t match',
+    termsError: 'Kindly read first and accept our terms and conditions.'
+}
+
+function validate_email( email ) {
+
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    console.log(email);
+    return re.test( email );
+}
+
+function prompt_check( check, target, status ) {
+
+    $(target)
+        .removeClass( 'success error' )
+        .addClass( check )
+        .find( 'span.help-inline' )
+        .text( msgs[ status ] )
+}
+
+function prompt_alert( check, message ){
+    $('.alert-box').html('<div class="alert alert-' + check + ' fade in"><a class="close" data-dismiss="alert">×</a><span>' + message + '</span></div>');
+}
+
+function signup( panel ) {
+
+    var form = $( panel ),
+        email = form.find( '#signup-email' ),
+        password = form.find( '#signup-passwd' ),
+        confirm_password = form.find( '#signup-confirm-passwd' ),
+        terms = form.find( '#signup-terms' ),
+        send_updates = form.find( '#signup-send-updates' ),
+        valid_email = false,
+        valid_password = false;
+
+    this.email = $(email).find( 'input[name="Email"]' ).val();
+    valid_email = validate_email( this.email );
+    if( false === valid_email ) {
+        prompt_check( 'error', email, 'emailInvalid' );
+        email.focus();
+        return false;
+    }else{
+        prompt_check( 'success', email, 'blank' );
+    }
+
+    this.password = $(password).find( 'input[name="Password"]' ).val();
+    this.confirm_password = $(confirm_password).find( 'input[name="ConfirmPassword"]' ).val();
+    valid_password = this.validate_password();
+    if( false === valid_password ) {
+        prompt_check( 'error', confirm_password, 'confirmPasswordError' );
+        password.focus();
+        return false;
+    }else{
+        prompt_check( 'success', password, 'blank' );
+        prompt_check( 'success', confirm_password, 'blank' );
+    }
+
+    if( false === terms.prop( 'checked' ) ) {
+        prompt_alert( 'error', msgs.termsError );
+        terms.focus();
+        return false;
+    }
+
+    this.send_updates = send_updates.prop( 'checked' ) ? 1 : 0;
+
+    if( valid_email && valid_password && terms.prop( 'checked' ) ) this.do_signup();
+}
+
+signup.prototype = {
+    validate_password: function() {
+        return '' !== this.password && '' !== this.confirm_password && this.password === this.confirm_password;
+    },
+    do_signup: function() {
+        $.ajax({
+            method: 'get',
+            url: '/ajax/signup',
+            data: { 'Email' : this.email, 'Password' : this.password, 'SendUpdates' : this.send_updates },
+            dataType: 'json',
+            success: function( response ) {
+                prompt_alert( 'success', response.message );
+                setTimeout(function () {
+                    $('#bfModalSignup').modal('hide')
+                }, 3000);
+            }
+        });
+    }
+}
+
+function login( panel ) {
+
+    var form = $( panel ),
+        email = form.find( '#login-email' ),
+        password = form.find( '#login-password' ),
+        remember = form.find( 'input[name="Remember"]' ),
+        valid_email = false,
+        valid_password = false;
+
+    this.email = $(email).find( 'input[name="Email"]' ).val();
+    this.password = $(password).find( 'input[name="Password"]' ).val();
+    this.remember = remember.prop( 'checked' ) ? 1 : 0;
+
+    valid_email = validate_email( this.email );
+    if( false === valid_email ) {
+        prompt_check( 'error', email, 'emailInvalid' );
+        email.focus();
+        return false;
+    }else{
+        prompt_check( 'success', email, 'blank' );
+    }
+
+    valid_password = this.validate_password();
+    if( false === valid_password ) {        
+        prompt_check( 'error', password, 'passwordError' );
+        password.focus();
+        return false;
+    }else{
+        prompt_check( 'success', password, 'blank' );
+    }
+
+    if( valid_email && valid_password ) this.do_login();
+}
+
+login.prototype = {
+    validate_password: function() {
+        return '' !== this.password;
+    },
+    do_login: function() {
+        $.ajax({
+            method: 'get',
+            url: '/ajax/login',
+            data: { 'Email' : this.email, 'Password' : this.password, 'Remember' : this.remember },
+            dataType: 'json',
+            success: function( response ) {
+                var status;
+
+                if( 'bad' === response.status ) status = 'error';
+                else status = 'alert';
+
+                prompt_alert( status, response.message );
+                
+                if( 'good' === response.status )
+                    window.location = '/profile'
+            }
+        })
+    }
+}
+
+$( function() {
+
+    $( '#signup-wrapper input[name="Email"], #signup-wrapper input[name="Password"], #signup-wrapper input[name="ConfirmPassword"]' ).on( 'focus', function() {
+        var signee = new signup( '#signup-wrapper' );
+    });
+    
+
+    $( '#login' ).on( 'click', function() {
+        var user = new login( '#login-wrapper' );
+    })
+
+    $( '#login-wrapper input[name="Email"], #login-wrapper input[name="Password"]' ).on( 'blur', function() {
+        var user = new login( '#login-wrapper' );
+    })
+
+    $( '#forgot-passwd' ).on( 'click', function() {
+        window.location = '/Security/lostpassword';
+    });
+});

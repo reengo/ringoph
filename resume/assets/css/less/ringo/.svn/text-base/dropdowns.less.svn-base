@@ -1,0 +1,34 @@
+.navbar .dropdown-menu {
+  padding: 5px;
+  .border-radius(0);
+
+  // Links within the dropdown menu
+  > li > a {
+    padding:9px 10px;
+    font-family:@montserratFontFamily;
+    border-bottom:1px solid @white;
+    background:@grayLighterMod;
+    &:hover{
+      background:@tangerine;
+    }
+  }
+}
+
+.typeahead.dropdown-menu {
+  border:none;
+  background:#dedede;
+  .border-radius(10px);
+
+  // Links within the dropdown menu
+  > li > a {
+    text-align:left;
+    background:#dedede;
+    border:1px solid #dedede;
+    &:hover{
+      .border-radius(10px);
+    }
+    &:active{
+      bacground:@tangerine;
+    }
+  }
+}

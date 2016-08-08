@@ -1,0 +1,37 @@
+/*
+
+Booking Frog Styles
+
+Description: Unique styles and overrides from bootstrap 
+
+Dev Notes:
+
+made the ff mods to bootrap
+1. variables.less - added BF theme entries
+2. fontawesome - on bootstrap.less, replaced sprite.less to font-awesome.less
+3. responsive.less - removed support for large desktops (1200px up); 
+
+*/
+
+/* Fonts */
+@font-face{
+	font-family:arvoBold;
+	src: url('../font/Arvo-Bold.ttf');
+}
+
+@font-face{
+	font-family:droidSans;
+	src: url('../font/DroidSans.ttf');
+}
+
+@font-face{
+	font-family:montserrat;
+	src: url('../font/Montserrat-Regular.ttf');
+}
+
+@import "../css/less/bootstrap/bootstrap.less";
+@import "../css/less/bootstrap/responsive.less";
+
+/* BF Main Styles */
+
+@import "../css/less/ringo/ringo.less";

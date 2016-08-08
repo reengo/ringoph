@@ -1,0 +1,7 @@
+@media (min-width: 980px) {
+  .start-block,
+  .hero-block.dashboard {
+    margin-top: 40px;
+    padding: 20px 0;
+  }
+}

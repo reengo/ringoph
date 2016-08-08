@@ -1,0 +1,36 @@
+/* media queries */
+@media (max-width: 767px) {
+	.bookstart input[type="text"]{background-position:right -57px}
+	.bookstart input[type="text"].date-form{
+    font: normal 16px arial;
+    padding: 15px 25px 15px 5px;
+    background-position:right -115px
+  }
+
+  .hero-block.dashboard{margin-top:20px;}
+	.carousel {
+        margin-left: -20px;
+        margin-right: -20px;
+      }
+      .carousel .container {
+
+      }
+      .carousel .item {
+        height: 300px;
+      }
+      .carousel img {
+        height: 300px;
+      }
+      .carousel-caption {
+        width: 65%;
+        padding: 0 70px;
+        margin-top: 100px;
+      }
+      .carousel-caption h1 {
+        font-size: 30px;
+      }
+      .carousel-caption .lead,
+      .carousel-caption .btn {
+        font-size: 18px;
+      }
+}

@@ -1,0 +1,188 @@
+// Responsive Styles
+// --------------------------------------------------
+
+@media (min-width: @screen-lg) {
+	section{
+		&.video-block{
+			background-size:cover;
+		}
+	}
+}    
+
+@media (min-width: @screen-md) and (max-width: @screen-md-max) {
+	section{
+		&.video-block,
+		&.post-block{
+			height: 100%;
+			.section-content{
+				width:80%;
+			}
+		}
+	}
+}  
+
+@media (min-width: @screen-sm) and (max-width: @screen-sm-max) {
+	section{
+		&.feature-block{
+			.section-content{
+				.feature-image{
+					img{ margin:0 auto; padding:20px }
+				}
+				h2,p,button{ text-align:center }
+			}
+		}
+		&.feature-block{
+			.feature-content{ text-align:center; }
+		}
+		&.footer-block {
+			.footer-content{ text-align:center; }
+		}
+	}
+	footer{
+		.nav{
+			li{
+				font-size: 13px;
+			}
+		}
+	}
+}  
+
+@media screen and (max-width: @screen-xs-max) {
+	.navbar-brand{
+		img{ width:30px; }
+	}
+	section{
+		&.video-block,
+		&.post-block{
+			background-attachment:scroll;
+			.section-content{
+				width:80%;
+
+				button{ .playstate(running); }
+			}
+		}
+
+		.bg-size( none );
+
+		.section-content,
+		.footer-content{ 
+			button{ .slideup; }
+			a>i{ margin:30px auto; }
+		}
+
+		&.video-block{
+			&:before{
+				.opacity(0.5);
+			}
+
+			.section-content{
+				a>i{ .opacity(1); }
+			}
+		}
+
+		&:first-of-type{ 
+			background-attachment:scroll; 
+			.bg-size( none );
+
+			.section-content{
+				width:80%;
+				margin-top:0;
+				button{ .playstate(running); }
+			}
+		}
+
+		&.no-content{
+			padding:30% 0;
+			.bg-size( none );
+			.section-content{
+				margin-top:0;
+			}
+		}
+
+		&.feature-block{
+			.bg-size( none );
+			.section-content{
+				width:100%;
+				margin:0 auto;
+				.feature-image{
+					img{ 
+						width: 100%;
+						margin: 0;
+						padding: 0;
+					}
+				}
+				h2{ font-size: 42px; }
+				h2,p,button{ text-align:left }
+			}
+		}
+
+		&.footer-block{
+			.section-content{
+				margin:0 auto;
+			}
+		}
+
+		button{ width:100% }
+	}
+
+	footer{
+		.nav{
+			padding-left:10px;
+			li{
+				width: 100%;
+				text-align: center;
+			}
+		}
+		.sig{ 
+			text-align:center;
+		}
+	}
+} 
+
+/* iPads (landscape) ----------- */
+@media only screen  and (min-device-width : 768px)  and (max-device-width : 1024px) and (orientation : landscape){
+	section{
+		background-attachment: scroll;
+		.bg-size( cover );
+
+		.section-content{
+			button{ .slideup }
+		}
+
+		&.video-block{
+			&:before{
+				.opacity(0);
+			}
+		}
+
+		.section-content,
+		.footer-content{
+			a>i{ .opacity(1) }
+			button{ .slideup }
+		}
+	}
+}
+
+/* iPads (portrait) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {
+	section{
+		background-attachment: scroll;
+		.bg-size( cover );
+
+		.section-content{
+			button{ .playstate(running); }
+		}
+
+		&.video-block{
+			&:before{
+				.opacity(0);
+			}
+		}
+
+		.section-content,
+		.footer-content{
+			a>i{ .opacity(1) }
+			button{ .slideup }
+		}
+	}
+}

@@ -1,0 +1,59 @@
+.start-block{
+	border-top:1px solid @white;
+	padding:8px 0;
+	background:@whiteMoreDarker;
+	text-align:center;
+	h2{margin-bottom:20px;text-align:left;}
+	ul{
+		list-style: none;
+		li{
+			text-align: center;
+			margin:0 10px;
+			font-size:@baseFontSize;
+			color:@grayLightest;
+			line-height: 25px;
+			&.empty{
+				background:url('../img/bg-empty-home-thumb-big.png') no-repeat center center;
+				span{
+					text-align: center;
+					display:block;
+					margin:0 auto;
+					padding:30px 0;
+					width:100px;
+				}
+				a{
+					color:@grayLightest;
+					&:hover{
+						text-decoration: none;
+					}
+				}
+			}
+		}
+	}	
+	hr{margin:20px 0;}
+}
+
+.thumbs-block{
+	button{
+		border-radius: 0 10px 10px 0;
+		position: relative;
+		margin: 0;
+		left: -4px;
+		padding: 2px 5px;
+		box-shadow: 0px 1px 5px #999;
+		background:#ddd;
+		opacity:1;
+		color: #000;
+	}
+}
+
+.dest-details{
+	img{border: 2px inset #000;}
+}
+
+.summary{
+	color:@grayDark + #111;
+	text-align: left;
+	h3{border-bottom:double @grayLighter;}
+	span{color:@grayLight;}
+}

@@ -1,0 +1,237 @@
+var DUMMY = {
+	init: function(){
+		this.setListeners();
+	},
+	setListeners: function(){
+		var that = this;
+		$('#bfModalAddItems button.btn-primary.tabsearch').on('click',function(){
+			var data = {
+				name: $('.tab-pane.active input.item-name').val(),
+				url: $('.tab-pane.active input.item-url').val(),
+				datefrom: $('.tab-pane.active input.item-date1').val(),
+				dateto: $('.tab-pane.active input.item-date2').val(),
+				notes: $('.tab-pane.active textarea.item-notes').text()
+			}
+			 var mode = $('.nav-tabs li.active').data('tab');
+
+			 switch(mode){
+			 	case'tab1-1': that.addItems.transpo(data); break;
+			 	case'tab1-2': that.addItems.hotel(data); break;
+			 	case'tab1-3': that.addItems.activity(data); break;
+			 }
+		});
+
+		$('#bfModalAddItems button.btn-primary.tabresult').on('click',function(){
+			var mode = $('.nav-tabs li.active').data('tab');
+
+			switch(mode){
+			 	case'tab1-1': 
+			 		$('div.transpo-container ul').append(
+						$('.tabresult li'),
+						$('div.transpo-container .addItemButton')
+					);
+			 	break;
+			 	case'tab1-2':
+			 		$('div.hotel-container ul').append(
+						$('.tabresult li'),
+						$('div.hotel-container .addItemButton')
+					);
+			 	break;
+			 	case'tab1-3': 
+			 		$('div.activity-container ul').append(
+						$('.tabresult li'),
+						$('div.activity-container .addItemButton')
+					);
+			 	break;
+			 }
+			$('.tabresult ul').empty();
+			$('#bfModalAddItems .tabsearch, #bfModalAddItems .tabresult').toggle();
+		});
+
+		$('.category-block div li button.btn-add').on('click',function(){
+			var that = this;
+			$('.nav-tabs li, div.tab-pane').each(function(){
+				if($(this).hasClass('active')){
+					$(this).removeClass('active');
+				}
+
+				if($(this).attr('data-tab') == $(that).data('tab') || $(this).attr('id') == $(that).data('tab')){
+					$(this).addClass('active');
+				}
+			});
+		});
+
+		$('.activity-form button').on('click',function(){
+			that.addItems.activity($('.activity-form input.activity-name').val())
+		});
+
+		$('#bfModalAddItems .tabresult').hide();
+		$('#bfModalAddItems .tabsearch').show();
+	},
+	addItems: {
+		transpo: function(data){
+			DUMMY.searchItems('transpo',data);
+			BF.listen();
+		},
+		hotel: function(data){
+			DUMMY.searchItems('hotel',data);
+			BF.setupPopover;
+		},
+		activity: function(data){
+			DUMMY.searchActivities(data);
+		}
+	},
+	searchItems: function(mode,data){
+		$('#bfModalAddItems .tabsearch, #bfModalAddItems .tabresult').toggle();
+		
+		var cards = mode == 'transpo'
+			? API.getTranspos(data)
+			: API.getHotels(data)
+
+		for ( card in cards ){
+			var obj = this.createCard( mode, cards[ card ] );
+			$('#bfModalAddItems div.modal-body .tabresult ul').append( obj );
+		}
+	},
+	searchActivities: function(data){
+		 var item = API.setActivity(data);
+		 $('.activity.table tbody').append(this.createListItem(item));
+	},
+	createListItem: function(data){
+		console.log(data);
+		return $('<tr>').append(
+					$('<td>').append(
+						$('<p>').addClass('activity-order').text(1),
+						$('<img>').attr('src','themes/bookingfrog/img/sample-activities-thumb1-small.png'),
+						$('<p>').text('' + data.name + ' (' + data.price + data.currency + 'per) '),
+						$('<button>').attr({'type':'button','data-dismiss':'alert'}).addClass('close').text('x')
+					)
+				)
+	},
+	createCard: function(mode, data){
+		var originalTitle = mode == 'transpo' ? 'Flight' : 'Hotel'
+		var type = mode == 'transpo' ? 'mode lv-text-air' : 'thumb-hotel';
+		
+		var thumbnail = mode == 'transpo' 
+			? $('<div>').addClass('mode lv-text-air pull-left').append($('<span>').text('AIR'))
+			: $('<p>').addClass('thumb-hotel pull-left').append($('<img>').attr('src','themes/bookingfrog/img/sample-hotel-thumb1-small.png'))
+		
+		var cardTitle = mode == 'transpo'
+			? $('<p>').addClass('card-title').text( data.origin + ' - ' + data.destination  ).append($('<small>').text('('+ data.line +')'))
+			: $('<p>').addClass('card-title').text( data.name );
+		
+		var card = $('<li>').addClass('card span4')
+					.attr({
+						'data-toggle':'popover',
+						'data-placement':'top',
+						'data-content':'Vivamus sagittis lacus vel augue laoreet rutrum faucibus.',
+						'title':'',
+						'data-original-title':originalTitle+' Details'
+					}).append(
+						$('<button>').addClass('close')
+							.attr({
+								'type':'button',
+								'data-dismiss':'alert'
+							}).text('x'),
+						thumbnail,
+						cardTitle,
+						$('<p>').addClass('price pull-right').text(data.price + ' ' + data.currency)
+					);
+
+		return card;
+
+	}
+
+}
+
+
+//AJAX Responses
+//Convert these to serverside scripts
+
+var API = {
+	getTranspos: function(data){
+		var destination;
+		var date;
+		switch(data.name){
+			case 'barcelona':
+				destination = 'BCN';
+			break;
+			case 'france':
+				destination = 'FRA';
+			break;
+			case 'japan':
+				destination = 'JPN';
+			break;
+			case 'los angeles':
+				destination = 'LAL';
+			break;
+			
+		}
+		var cards = API.findDestination( API.transpos, destination );
+		return cards;
+	},
+	findDestination: function(objects,val){
+		var cards = [];
+        for(object in objects){
+        	if(objects[object].destination == val){
+        		cards.push(objects[object])
+        	}
+        }
+	    return cards;
+	},
+	getHotels: function(data){
+		var cards = [];
+        for(hotel in this.hotels){
+        	if(this.hotels[hotel].slug == data.name){
+        		cards.push(this.hotels[hotel])
+        	}
+        }
+        console.log(cards);
+        console.log(this.hotels[hotel].slug);
+        console.log(data);
+	    return cards;
+	},
+	setActivity: function(data){
+		var list;
+
+		for(activity in this.activities){
+			console.log(data)
+			if(this.activities[activity].slug == data){
+				list = this.activities[activity];
+			}
+		}
+		return list;
+	},
+	transpos:[
+		{origin:'MLA',destination:'BCN',mode:'AIR',line:'CebuPacific',date:'20130506',price:'30000',currency:'PHP'},
+		{origin:'MLA',destination:'BCN',mode:'AIR',line:'ZestAir',date:'20130506',price:'270',currency:'EUR'},
+		{origin:'MLA',destination:'BCN',mode:'AIR',line:'Philippine Airlines',date:'20130506',price:'39000',currency:'PHP'},
+		{origin:'MLA',destination:'FRA',mode:'TRAIN',line:'Rail Europe',date:'20130506',price:'290',currency:'EUR'},
+		{origin:'MLA',destination:'FRA',mode:'AIR',line:'Etihad',date:'20130506',price:'680',currency:'USD'},
+		{origin:'MLA',destination:'LAL',mode:'TRAIN',line:'American Airlines',date:'20130506',price:'430',currency:'USD'},
+		{origin:'MLA',destination:'JPN',mode:'TRAIN',line:'Jorudan',date:'20130506',price:'20000000',currency:'YEN'}
+	],
+	hotels: [
+		{name:'Rennaisance Hotel',slug:'rennaisance',url:'http://',thumbnail:'image',date:'20130506',price:'410',currency:'USD'},
+		{name:'Marriotte Hotel',slug:'marriotte',url:'http://',thumbnail:'image',date:'20130506',price:'490',currency:'USD'},
+		{name:'Sheraton Imperial',slug:'sheraton',url:'http://',thumbnail:'image',date:'20130506',price:'510',currency:'USD'},
+		{name:'Astoria Hotel',slug:'astoria',url:'http://',thumbnail:'image',date:'20130506',price:'510',currency:'USD'},
+		{name:'Palace Praha Hotel',slug:'praha',url:'http://',thumbnail:'image',date:'20130506',price:'510',currency:'USD'},
+		{name:'Empress Hotel',slug:'empress',url:'http://',thumbnail:'image',date:'20130506',price:'510',currency:'USD'},
+		{name:'Excelsior Gallia',slug:'excelsior',url:'http://',thumbnail:'image',date:'20130506',price:'510',currency:'USD'}
+	],
+	activities: [
+		{name:'Snorkeling',slug:'snorkeling',url:'http://',thumbnail:'image',date:'20130506',price:'100',currency:'USD'},
+		{name:'Kayaking',slug:'kayaking',url:'http://',thumbnail:'image',date:'20130506',price:'190',currency:'USD'},
+		{name:'Banana Boat',slug:'banana boat',url:'http://',thumbnail:'image',date:'20130506',price:'210',currency:'USD'},
+		{name:'City Tour',slug:'tour',url:'http://',thumbnail:'image',date:'20130506',price:'20',currency:'USD'},
+		{name:'Mountain Biking',slug:'biking',url:'http://',thumbnail:'image',date:'20130506',price:'30',currency:'USD'},
+		{name:'Hiking',slug:'hiking',url:'http://',thumbnail:'image',date:'20130506',price:'10',currency:'USD'},
+		{name:'Trail Biking',slug:'trail biking',url:'http://',thumbnail:'image',date:'20130506',price:'100',currency:'USD'},
+	]
+
+}
+
+$(document).ready(function(){
+	DUMMY.init();
+});

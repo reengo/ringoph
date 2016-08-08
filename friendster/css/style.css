@@ -1,0 +1,215 @@
+/* Copyright 2011 Friendster. All Rights Reserved. */
+
+html, body {
+    height: auto;
+    background: #fff;
+    border:0;
+    padding:0;
+    margin:0;
+}
+
+img {
+    border-width: 0px;
+}
+
+a, a:visited {
+    color: #349D34;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+body, input, textarea, td, select, option {
+  color: black;
+  font-family: Arial, sans-serif;
+  font-size: 10pt;
+}
+
+body {
+    margin: 0 auto;
+    background:url(http://assets.friendster.com/fsexporter/emailHeader1px.png) repeat-x;
+}
+
+#content-wrap{
+    width:860px;
+    border:0;
+    padding:0;
+    margin:0 auto
+}
+
+table {
+	width: 100%;
+}
+
+table td.hd{
+    background:url(http://images.friendster.com/images/v2/emailHeader.png) no-repeat
+}
+
+.ltd {
+    width: 200px;
+    padding-top: 5px;
+    padding-right:10px;
+}
+
+.rtd {
+    padding-top: 20px;
+    padding-left: 15px;
+}
+
+#content {
+    width: 650px;
+    padding-top: 17px;
+    border-top: 1px solid #ccc;
+    overflow: hidden;
+}
+
+#content.tabmessages {
+    border-top-width: 0px;
+}
+
+#content.tabshoutouts {
+	padding-top: 6px;
+}
+
+.comments {
+	margin-top: 8px;
+}
+
+.shoutout, .testimonials, .blog{
+    padding: 10px 2px 10px 0px;
+    border-bottom: 1px solid #eee;
+}
+
+.shoutout .comments {
+	margin-top: 10px;
+    margin-bottom: 8px;
+}
+
+.shoutout .timerow {
+	margin-top: 2px;
+}
+
+table {
+	border-collapse: collapse;
+}
+td {
+    vertical-align: top;
+    padding-bottom: 10px;
+}
+td.label {
+    white-space: nowrap;
+    padding-right: 6px;
+	font-style: italic;
+}
+
+#menu {
+    margin-top: 10px;
+}
+
+#menu b {
+    background: #349D34;
+		color: #fff;
+}
+
+#menu a,b {
+    display: block;
+    margin-top: 3px;
+    padding: 5px 10px 5px 10px;
+}
+
+#menu .sel {
+    background: #349D34;
+	color: #fff;
+    font-weight: bold;
+}
+
+h1, h2 {
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+.message {
+    border: 1px dotted #ddd;
+    padding: 10px;
+		margin-bottom: 15px;
+}
+
+/* TODO clean up */
+.message .profile, .shoutout .profile, .testimonials .profile, .comment .profile, .profile {
+	color: #349D34;
+}
+
+.message .subject {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.message .msgbody {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.message .time {
+    display: block;
+    float: right;
+}
+
+.shoutout-time, .testimonials .time {
+	padding-left: 7px;
+}
+
+.time, .birthday {
+    color: #888;
+    font-size: 8pt;
+}
+
+.comment {
+    background: #eee;
+    margin-top:5px;
+    padding: 8px 8px 8px 20px;
+}
+
+.comment-post {
+	padding-left: 5px;
+}
+
+.testimonial-post {
+	padding-top: 10px;
+}
+
+.exportdate {
+		margin-top:50px;
+		padding: 10px 0;
+		text-align: center;
+		border-top: 1px solid #ccc;
+		color: #888;
+		font-size: 8pt
+}
+
+.userlist td {
+		border-top: 1px solid #ccc;
+		padding: 10px 10px 10px 0
+}
+
+.userlist .thumbnail {
+		width:150px;
+		text-align: center
+}
+
+.twocoltable td {
+		width:50%
+}
+
+.album, .photo {
+		margin-bottom:35px
+}
+
+.title, .caption{
+		padding:3px 0
+}
+
+.desc {
+		font-size:9pt
+}

@@ -1,0 +1,108 @@
+.category-block{
+}
+
+.transpo-container,
+.hotel-container,
+.activities-container{
+	background:@whiteMoreDarker - #040404;
+	margin:10px 0 20px 0 !important;
+	border:1px solid @grayLighterMod - #060606;
+	padding:10px;
+	ul{
+		list-style: none;	
+		margin:0;
+		li{
+			height:50px;
+			display:inline-block;			
+			.border-radius(6px);
+			margin-bottom:20px;
+		}
+	}
+	td{
+		img,p,button{display:inline-block;}
+		.activity-order{font-weight:@headingsFontWeight;}
+	}
+	input[type="text"].date-form{
+		font: normal 16px arial;
+        padding: 15px 25px 15px 5px;
+		font-weight: bold;
+		background:url(@iconModPath) no-repeat @white right -116px;
+	}
+	.row-fluid .span4{
+		margin: 6px 3px;
+	}
+}
+.card{
+	border-color: @grayLighterMod - #060606;
+	border-width: 1px 2px 3px 1px;
+	border-style: solid solid double solid;	
+	background:@white;
+	width:185px;	
+	.mode{
+		background:url(@leftVerticalText) @grayLighterMod no-repeat;
+		display:block;
+		margin:0 5px 0 0 ;
+		width:25px;
+		height:48px;
+		padding:0 4px;
+		border-right:1px dashed @grayLighterMod - #090909;
+		span{display:none;}		
+		&.lv-text-train{background-position:5px 1px;}
+		&.lv-text-air{background-position:-20px 1px;}		
+	}
+	p.card-title{
+		font-size: @baseFontSize - 2;
+		font-family: @headingsFontFamily;
+		font-weight: @headingsFontWeight;
+		color:@black;
+		margin:0 0 15px 0;
+		padding:5px;
+		line-height: 12px;
+		small{
+			display:block;
+			font-weight: normal;
+			line-height: 12px;
+		}
+	}
+	&:hover{
+		border-right:2px solid @tangerine;
+		background:@tangerine + #888;
+	}
+	p.price{
+		color:@tangerine; 
+		font-size: @baseFontSize;
+		font-weight:@headingsFontWeight;
+		padding:2px 5px;
+		margin:-25px 0 0 0;
+	}
+	.thumb-hotel{
+		margin:0 5px 0 0 ;
+		padding:0 3px 0 0;
+		border-right:1px dashed @grayLighterMod - #090909;
+}
+	&:after{
+		background:url(@graphicCardShadowPath) no-repeat top left;
+		content:"";
+		height:5px;
+		display:block;
+	};
+	&.active,
+	&:active{background:@sky + #999;};
+}
+
+.card.selected{background:@sky + #777};
+
+.hotel-container ul li{
+	height:60px;
+	padding:3px;	
+	p.card-title{
+		margin:0 0 21px 52px;
+	}
+}
+
+.activities-container .dropdown-menu.activities{
+	li{backgrond:none;}
+}
+.utils{
+	margin-top:20px;
+}

@@ -1,0 +1,4 @@
+@media (min-width: 768px) and (max-width: 979px) {
+	.hero-block.dashboard{margin-top:20px}
+	.hero-block.profile{margin-top:20px}
+}

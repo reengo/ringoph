@@ -1,0 +1,53 @@
+/* 
+* Pull to Corner 
+* @param x:String - left or right;
+*/
+
+.pull-top(@x){
+	position: absolute;
+	top: 0;
+	left: 5%;
+	text-align: @x;
+}
+
+/*
+* apply Gradient Effect
+* @param c1:String - color1;
+* @param c2:Strin - color2;
+*/
+
+.gradient(@c1, @c2){
+	background: @c1; /* Old browsers */
+	background: -moz-linear-gradient(left,  @c1 0%, @c1 2%, @c2 67%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,@c1), color-stop(2%,@c1), color-stop(67%,@c2)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(left,  @c1 0%,@c1 2%,@c2 67%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(left,  @c1 0%,@c1 2%,@c2 67%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(left,  @c1 0%,@c1 2%,@c2 67%); /* IE10+ */
+	background: linear-gradient(to right,  @c1 0%,@c1 2%,@c2 67%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@c1', endColorstr='@c2',GradientType=1 ); /* IE6-9 */
+}
+
+/*
+* Box Shadow
+* @param x:String - x coor (px);
+* @param y:String - y coor (px);
+* @param d:String - distance (px);
+* @param rgba:String - color value with alpha (rgba);
+*/
+
+.box-shadow(@x, @y, @d, @rgba){
+	-webkit-box-shadow: @x @y @d @rgba;
+	-moz-box-shadow:    @x @y @d @rgba;
+	box-shadow:         @x @y @d @rgba;
+}
+
+
+/*
+* Border Radius
+* @param radius:String - raduis;
+*/
+.border-radius(@radius){
+	-webkit-border-radius: @radius;
+	-moz-border-radius: @radius;
+	border-radius: @radius;
+}

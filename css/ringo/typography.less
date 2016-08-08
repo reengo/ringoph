@@ -1,0 +1,52 @@
+@import url(http://fonts.googleapis.com/css?family=Droid+Serif:400,700);
+
+@main-font: 'Droid Serif', serif;
+
+.main-font{ 
+	font-family:@main-font;
+	font-weight:800; 
+}
+
+html{ font-family: arial; }
+
+body{ font-family: arial, sans-serif }
+
+h1,h2,h3,h4,h5{ visiblity:hidden; }
+
+h1{ font-size:50px; .main-font; }
+h2{ font-size:48px; .main-font; }
+h3{ font-size:20px; .main-font; font-weight:normal}
+h4{ font-size:14px; font-family:arial; }
+h5{ .main-font; font-weight:normal;}
+
+.text-purple{ color:@brand-primary}
+
+p{
+	font-family:arial;
+	font-family:@main-font;
+	font-size:18px;
+	font-weight:normal;
+
+	&.emphasis{
+		font-family:arial;
+		font-family:@main-font;
+		font-size:24px;
+	}
+
+	strong{
+		font-weight:bold;
+	}
+}
+
+blockquote{
+	font-size:24px;
+	.text-purple;
+}
+
+.link-underlined{
+	color:black;
+	text-decoration:underline;
+	font-weight:bold;
+
+	&:hover{ text-decoration:none; }
+}

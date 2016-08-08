@@ -1,0 +1,73 @@
+.calendar-block{
+	table{
+		margin-top:20px;
+		tr.months th{
+			border:none;
+			background:url(@graphicChromeTile);
+			color:@white;
+			text-align:center;
+			line-height: 20px;
+		}
+		tr.days th{
+			line-height: @baseLineHeight / 4;
+			font-size: @fontSizeMini - 1;
+			height: @baseLineHeight / 4;
+			color:@grayLight - #111;
+			background:#d9d7d7;
+		}
+		td{
+			font-weight:@headingsFontWeight;
+			background:@grayLightest + #414141;
+			color:@grayLight - #111;
+		}	
+		td:hover{
+			color:@white;
+			background:@tangerine !important;
+		};	
+		td.blue{color:@white;background:@blue !important;}
+		td.blue-dark{color:@white;background:@blueDark !important;}
+		td.green{color:@white;background:@green !important;}
+		td.green-dark{color:@white;background:@greenDark !important;}
+		td.red{color:@white;background:@red !important;}
+		td.yellow{color:@white;background:@yellow !important;}
+		td.orange{color:@white;background:@orange !important;}
+		td.pink{color:@white;background:@pink !important;}
+		td.purple{color:@white;background:@purple !important;}
+		td.tangerine{color:@white;background:@tangerine !important;}
+		td.tangerine-dark{color:@white;background:@tangerineMod !important;}
+		td.moss-green{color:@white;background:@mossGreen !important;}
+		td.moss-green-dark{color:@white;background:@darkMossGreen !important;}
+		td.pastel{color:@white;background:@pastelBrown !important;}
+		td.mustard{color:@white;background:@mustard !important;}
+		td.green-apple{color:@white;background:@greenApple !important;}
+		td.sky{color:@white;background:@sky !important;}
+		
+	}
+}
+ul.legend-calendar{
+	list-style: none;
+	margin:0;
+	li{
+		display:inline-block;
+		color:@grayLight;
+		padding:3px 10px;
+	}
+}
+
+i.blue{color:@blue !important;}
+i.blue-dark{color:@blueDark !important;}
+i.green{color:@green !important;}
+i.green-dark{color:@greenDark !important;}
+i.red{color:@red !important;}
+i.yellow{color:@yellow !important;}
+i.orange{color:@orange !important;}
+i.pink{color:@pink !important;}
+i.purple{color:@purple !important;}
+i.tangerine{color:@tangerine !important;}
+i.tangerine-dark{color:@tangerineMod !important;}
+i.moss-green{color:@mossGreen !important;}
+i.moss-green-dark{color:@darkMossGreen !important;}
+i.pastel{color:@pastelBrown !important;}
+i.mustard{color:@mustard !important;}
+i.green-apple{color:@greenApple !important;}
+i.sky{color:@sky !important;}

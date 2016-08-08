@@ -1,0 +1,61 @@
+var BF = {
+	init: function(){
+		$('.start-block ul li a,.trips-block ul li a img,.bookstart input').tooltip({
+			placement: 'top',
+			animation: true
+		});
+		this.listen();
+		this.editables();
+	},
+	listen: function(){
+		$('li.card').popover({
+			placement: 'top',
+			animation: true,
+			trigger:'click'
+		});
+
+		
+		$('li.card').on('hover', function(){
+			if($(this).next('div').length != 1){	
+				$('li.card').popover('hide');	
+			}
+		})
+
+		$('li.card').on('click', function(){
+			$(this).addClass('selected');
+		})
+	},
+	editables:function(){
+		var that = this;
+		$('.editable a').on('click', function(){
+			var el = $(this).parent().prop("tagName");
+			$(this).parent().replaceWith(
+
+				$('<div>').addClass('input-append editable')
+					.append(
+						$('<input>').attr({
+							type:'text',
+							id:'appendedInputButton'
+						}).val($(this).parent().text()),
+						$('<button>').addClass('btn')
+							.attr('type','button')
+							.text('Change')
+							.on('click', function(){
+								$(this).parent().replaceWith(
+									$('<'+el+'>').addClass('editable')
+										.append(
+										$('.editable input').val(),
+										$('<a>').append(
+											$('<i>').addClass('icon-pencil')
+										)
+									)
+								);
+								that.editables();
+							})
+					)
+			);
+		})
+	}
+
+}
+BF.init();

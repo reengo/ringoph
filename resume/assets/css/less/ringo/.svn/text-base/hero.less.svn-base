@@ -1,0 +1,72 @@
+.hero-block{
+	border-bottom:1px solid @grayLighter;
+	padding-bottom:20px;	
+	.hero-welcome{
+		font-family: arvoBold;
+		h1{
+			margin-top:35px;
+		}
+		p{			
+			font-size:14px;
+			color:#a5a5a5;
+			line-height: 25px
+		}
+	}
+}
+.hero-block.profile{
+	padding-bottom:0;
+	border-bottom:none;
+	.destination{
+		padding:6px;
+		border:1px solid @grayLighter;
+	}
+	.container:after{
+		padding:0;
+		margin:0 auto;
+		height:20px;
+		display:block;
+		position:relative;
+		content:"";
+		text-align:center;
+		background:url(@graphicShadowPath) no-repeat;
+	}
+}
+
+.hero-block.dashboard{
+	margin-top:90px;
+	i{
+		color:@grayLight;
+	}
+	h3{
+		margin: 20px 0 0 0;
+		line-height: @baseLineHeight;
+	}
+	p{
+		margin:0;
+		color:@grayLight;
+	}
+	.link-light a{
+		color:@grayLight - #111;
+		font-size:@fontSizeMini - 1px;
+		line-height: @baseLineHeight;
+	}
+}
+
+
+
+/* Hero Carousel */
+
+.carousel-caption{
+	.map-segment{
+		font-size:12px;
+		img{
+			float:left;
+			margin:0 7px 7px 0;
+		}
+	}
+	.details-segment{
+		font-size:12px;
+		background:rgba(0, 0, 0, 0.7);
+		padding:10px;
+	}	
+}

@@ -1,0 +1,17 @@
+/* Modal Styles */
+.modal-header .icon-facetime-video{
+	color:@grayLight;
+}
+
+.modal-body.divide{
+	background:url(@graphicOrCenterDivider) no-repeat center center
+}
+
+#bfModalAddItems .modal-body{
+	padding:0 15px 15px 15px;
+}
+
+.nav-tabs li{
+	i{font-size:18px;}
+	p{font-size:11px;margin:0;}	
+}

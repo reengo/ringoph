@@ -1,0 +1,3 @@
+.activity-form{
+	input.date-form{margin:0}
+}

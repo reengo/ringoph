@@ -1,0 +1,24 @@
+.navbar-inverse .navbar-inner{
+	background:none;
+	background:url(@graphicChromeTile);
+	padding:2px 0;
+}
+
+.navbar-form-fieldset{
+	input[type="text"]{
+		background:url(@iconModPath) no-repeat #fff right -57px;
+	}
+}
+	.nav ul li a:active{
+		background:none;
+	}
+
+.navbar{
+	.brand {padding:0}
+	.nav.pull-right {margin:5px 10px -3px 0 }
+	.nav > li > a{padding:0 15px}
+} 
+
+.navbar .btn,
+.navbar-form-fieldset input {margin-top:4px;}
+

@@ -1,0 +1,213 @@
+/**
+ * Constructor method for trip object.
+ * 
+ * @param string destination
+ */
+function trip( destination ) {
+
+    this.destination = destination;
+    this.get_destination_images( this.get_destination_id() );
+    this.hotels = [];
+    this.start_date = null;
+    this.end_date = null;
+}
+
+/**
+ * Trip object prototype.
+ */
+trip.prototype = {
+    /**
+     * Fetch the destination's id from 43places.com
+     * Will be used to fetch for destination image
+     * 
+     * @return int destination_id
+     */
+    get_destination_id : function() {
+        var destination_id = $.ajax({
+                url : 'actions/getcityid',
+                data : { 'city' : this.destination.split( ',' )[ 0 ] },
+                method: 'get',
+                async : false
+            }).responseText;
+
+        return destination_id;
+    },
+    /**
+     * Fetch the destination's image from 43places.com
+     * 
+     * @param int destination_id
+     * @return void
+     */
+    get_destination_images : function( destination_id ) {
+        var photos = $.ajax({
+                url : 'actions/getcityimages',
+                data : { 'city_id' : destination_id },
+                method : 'get',
+                async : false
+            }).responseText;
+
+        var parsed_photos = $.parseJSON( photos );
+        this.destination_thumb = parsed_photos.thumb;
+        this.destination_image = parsed_photos.full;
+    },
+    /**
+     * Build the destination overview box
+     * 
+     * @return string summary_el
+     */
+    get_overview : function() {
+        var summary_el;
+
+        summary_el = '<button type="button" class="close" data-dismiss="unselect">×</button><a href="#"><img src="' + this.destination_thumb + '" title="' + this.destination + '" alt="' + this.destination + '" width="103"></a>' + '<p>' + this.destination + '</p>';
+
+        return summary_el;
+    },
+    /**
+     * add hotel details to the trip
+     * 
+     * @param string name
+     * @param string thumb
+     * @return void
+     */
+    add_hotel : function( name, thumb ) {
+        var hotel = new Object();
+
+        hotel.name = name;
+        hotel.thumb = thumb;
+
+        this.hotels.push( hotel );
+    }
+}
+
+$( function() {
+
+    var form_start = $( '#form-start' ),
+        dest_field = $( 'input[name="destination"]' ),
+        hotel_field = form_start.find( 'input[name="hotel"]' ),
+        dest_thumb = $( 'li.dest-details' ),
+        hotel_matches = {},
+        trip_obj;
+
+    dest_field.typeahead({
+        source: function( query, process ) {
+            return $.ajax({
+                url : 'http://ws.geonames.org/searchJSON',
+                dataType : 'jsonp',
+                data : { featureClass : 'P', style : 'long', maxRows : 10, name_startsWith : query },
+                success: function( data ) {
+                    var cities = [];
+                    $.each( data.geonames, function( i, item ) {
+                        cities.push( item.name + ( item.adminName1 ? ", " + item.adminName1 : "" ) + ", " + item.countryName );
+                    });
+
+                    return process( cities );
+                }
+            });
+        },
+        updater: function( item ) {
+            var el = this.$element,
+                old = '';
+
+
+            trip_obj = new trip( item );
+
+            // check if from the main form
+            if ( 'tooltip' ===  el.data( 'toggle' ) ) {
+                old = dest_thumb.html();
+                if ( dest_thumb.hasClass( 'empty' ) ) dest_thumb.removeClass( 'empty' );
+                dest_thumb.html( trip_obj.get_overview() );
+
+                // bring back the old content when (x) is clicked
+                dest_thumb.find('button[data-dismiss="unselect"]').on('click', function(){
+                    dest_thumb.addClass('empty').html( old );
+                    dest_field.toggle( 'fast' );
+                    hotel_field.toggle( 'fast' );
+                });
+
+                // hide destination field and show hotel field
+                dest_field.toggle( 'fast' );
+                hotel_field.toggle( 'fast' );
+            }
+
+            return item;
+        },
+        items: 10
+    });
+
+    // hotel field typeahead
+    hotel_field.typeahead({
+        source: function( query, process ) {
+            var data = $.ajax({url:'actions/gethotels',data:{'city':trip_obj.destination},async:false}).responseText,
+                hotels = [];
+
+            $.each( $.parseJSON( data ), function( i, item ) {
+                hotel_matches[ item.name ] = item;
+                hotels.push( item.name );
+            });
+
+            process( hotels );
+        },
+        updater: function( item ) {
+            var image_url = hotel_matches[ item ].url,
+                hotel_thumb = $( '.hotel-details.empty' ).first(),
+                old = '';
+
+            if( hotel_thumb.length ) {
+                old = hotel_thumb.html();
+                hotel_thumb.removeClass( 'empty' ).html(
+                    '<button type="button" class="close" data-dismiss="unselect">×</button><a href="#"><img src="' + image_url + '" alt="' + item + '" title="' + item + '" width="103"></a>' +
+                    '<p>' + item + '</p>'
+                );
+
+                // bring back the old content when (x) is clicked
+                hotel_thumb.find('button[data-dismiss="unselect"]').on('click', function(){
+                    hotel_thumb.addClass('empty').html(old);
+                });
+
+                trip_obj.add_hotel( item, image_url );
+            }
+        },
+        items: 10
+    });
+
+    // date pickers
+    $( '.date-form' ).datepicker({ minDate: new Date() });
+
+    // on main form submit
+    var modal_div = $( '#bfModalStart' ),
+        modal_dest = modal_div.find( 'input[name="destination"]' ),
+        modal_start = modal_div.find( 'input[name="start-date"]' ),
+        modal_end = modal_div.find( 'input[name="end-date"]' );
+
+    form_start.submit( function() {
+        var start_date = $( this ).find( 'input[name="start-date"]' ),
+            end_date = $( this ).find( 'input[name="end-date"]' );
+
+        if ( ! trip_obj || ! start_date.val() || ! end_date.val() ) {
+            // populate exisitng trip details to modal form
+            if ( trip_obj ) modal_dest.val( trip_obj.destination );
+            modal_start.val( start_date.val() );
+            modal_end.val( end_date.val() );
+
+            // open create trip modal
+            modal_div.modal();
+
+            return false;
+        } else {
+            trip_obj.start_date = start_date.val();
+            trip_obj.end_date = end_date.val();
+            var trip_details = $( '<input>' ).attr( 'type', 'hidden' ).attr( 'name', 'trip' ).val( JSON.stringify( trip_obj ) );
+            form_start.append( trip_details );
+        }
+    });
+
+    // on modal form submit
+    $( '#modalSubmit' ).click( function() {
+        var modal_form = modal_div.find( 'form' );
+
+        trip_obj.start_date = modal_start.val();
+        trip_obj.end_date = modal_end.val();
+        trip_details = $( '<input>' ).attr( 'type', 'hidden' ).attr( 'name', 'trip' ).val( JSON.stringify( trip_obj ) );
+        modal_form.append( trip_details ).submit();
+    });
+});
