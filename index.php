@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Ringo Bautista Online Portfolio">
+    <meta name="author" content="Ringo Bautista">
     <link rel="shortcut icon" href="img/ico/favicon.png">
    
     <title>Ringo Bautista :: Online Portfolio 2013</title>
@@ -212,7 +212,7 @@
     <footer>
       <div class="container">
         <div class="row">
-          <p class="sig col-lg-7 col-md-6 col-sm-5 col-xs-12">Copyright &copy; 2013. Ringo Bautista. All Rights Reserved</p>
+          <p class="sig col-lg-7 col-md-6 col-sm-5 col-xs-12">Copyright &copy; <?php echo date("Y"); ?>. Ringo Bautista. All Rights Reserved</p>
           <ul class="nav nav-pills pull-right">
             <li><a href="http://github.com/reengo"><i class="icon-github icon-2x"></i></a></li>
             <li><a href="http://twitter.com/ringobautista"><i class="icon-twitter icon-2x"></i></a></li>
