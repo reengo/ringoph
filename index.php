@@ -242,7 +242,7 @@
           var data = {
               name: $("#name").val(),
               email: $("#email").val(),
-              message: $("#message").html()
+              message: $("#message").val()
           };
           $.ajax({
               type: "POST",
