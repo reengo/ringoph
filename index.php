@@ -192,16 +192,16 @@
             <p>Give me your thoughts on my work, request for a quote or better yet, ask me anything you could ever think of.</p>
           </div>
           <div class="col-lg-6 col-md-6">
-            <form>
+            <form method="post" action="mailer.php">
               <label>Send Me Message:</label>
               <div class="form-group">
-                <input type="email" class="input-lg form-control" id="email" placeholder="Your Email">
+                <input type="email" class="input-lg form-control" id="email" name="email" placeholder="Your Email">
               </div>
               <div class="form-group">
-                <input type="text" class="input-lg form-control" id="name" placeholder="Your Name">
+                <input type="text" class="input-lg form-control" id="name" name="name" placeholder="Your Name">
               </div>
               <label>Your Message:</label>
-              <textarea class="form-control" rows="4"></textarea>
+              <textarea name="message" class="form-control" rows="4"></textarea>
               <input type="submit" class="btn btn-primary" value="SEND"></input>
             </form>
           </div>
@@ -231,7 +231,6 @@
 
       ga('create', 'UA-9979296-4', 'auto');
       ga('send', 'pageview');
-
     </script>
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
