@@ -203,7 +203,7 @@
                 <input type="text" class="input-lg form-control" id="name" name="name" placeholder="Your Name">
               </div>
               <label>Your Message:</label>
-              <textarea name="message" class="form-control" rows="4"></textarea>
+              <textarea id="message" class="form-control" rows="4"></textarea>
               <input type="submit" class="btn btn-primary" value="SEND"></input>
             </form>
           </div>
@@ -242,7 +242,7 @@
           var data = {
               name: $("#name").val(),
               email: $("#email").val(),
-              message: $("#message").val()
+              message: $("#message").html()
           };
           $.ajax({
               type: "POST",
