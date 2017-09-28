@@ -191,8 +191,10 @@
             <p class="emphasis">A little message could start something great. so why not send me one? </p>
             <p>Give me your thoughts on my work, request for a quote or better yet, ask me anything you could ever think of.</p>
           </div>
+
           <div class="col-lg-6 col-md-6">
-            <form method="post" action="mailer.php">
+            <div class="alert alert-success" style="display:none"><strong>Message Sent!</strong><br>Thank you for sending your inquiries. I'll get to you as soon as I can</div>
+            <form id="contact" method="post">
               <label>Send Me Message:</label>
               <div class="form-group">
                 <input type="email" class="input-lg form-control" id="email" name="email" placeholder="Your Email">
@@ -235,5 +237,24 @@
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>
+    <script type="text/javascript">
+      $('#contact').submit(function(e){
+          var data = {
+              name: $("#name").val(),
+              email: $("#email").val(),
+              message: $("#message").val()
+          };
+          $.ajax({
+              type: "POST",
+              url: "mailer.php",
+              data: data,
+              success: function(){
+                  $('.alert-success').fadeIn(1000);
+              }
+          });
+
+          e.preventDefault();
+      });
+    </script>
   </body>
 </html>
