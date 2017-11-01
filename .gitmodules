@@ -1,3 +1,6 @@
 [submodule "jennifer"]
 	path = jennifer
 	url = https://github.com/reengo/rinjenph
+[submodule "react"]
+	path = react
+	url = https://github.com/reengo/ringoph-react
